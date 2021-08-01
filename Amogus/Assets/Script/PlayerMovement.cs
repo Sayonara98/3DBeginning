@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
+    private Transform cameraTransform;
+    [SerializeField]
     private float Speed = 2f;
-    private Vector3 m_Movement;
-    private Rigidbody m_Rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -25,11 +24,16 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+        Vector3 forward = cameraTransform.transform.forward;
+        Vector3 right = cameraTransform.transform.right;
 
-        m_Movement.Set(horizontal, 0f, vertical);
-        m_Movement.Normalize();
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
 
-        //m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * Speed * Time.deltaTime);
-        transform.Translate(m_Movement * Speed * Time.deltaTime);
+        Vector3 desiredMoveDirection = forward * vertical + right * horizontal;
+
+        transform.Translate(desiredMoveDirection * Speed * Time.deltaTime);
     }
 }
