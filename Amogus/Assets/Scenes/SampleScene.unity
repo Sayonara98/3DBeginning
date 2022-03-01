@@ -813,6 +813,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5284618331447617949, guid: 898f324d961f2ba4c953029a7de86e27, type: 3}
+      propertyPath: m_speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5284618331447617949, guid: 898f324d961f2ba4c953029a7de86e27, type: 3}
       propertyPath: m_followCamera
       value: 
       objectReference: {fileID: 2094653286}
