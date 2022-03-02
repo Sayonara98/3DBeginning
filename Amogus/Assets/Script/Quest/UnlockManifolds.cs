@@ -54,7 +54,7 @@ public class UnlockManifolds : MonoBehaviour
             btn.image.color = Color.green;
             m_currentNumber++;
         }
-        else
+        else if (btn.image.color != Color.green)
         {
             m_isClickWrongNumber = true;
         }

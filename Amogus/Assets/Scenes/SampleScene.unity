@@ -3891,7 +3891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 562509044}
-  m_distanceFromTarget: 3
+  m_distanceFromTarget: 4
   RotationSpeed: 1
   m_smoothTime: 0.2
   m_rotationXMinMax: {x: -40, y: 40}
