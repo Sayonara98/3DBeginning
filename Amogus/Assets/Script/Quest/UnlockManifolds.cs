@@ -34,13 +34,6 @@ public class UnlockManifolds : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_isClickWrongNumber)
-        {
-            resetAllButton();
-            m_isClickWrongNumber = false;
-            m_currentNumber = 1;
-        }
-
         if (m_currentNumber == transform.childCount + 1 && quest.IsQuestComplete() == false)
         {
             quest.CompleteQuest();
@@ -49,22 +42,38 @@ public class UnlockManifolds : MonoBehaviour
 
     void OnClickButton(Button btn)
     {
-        if (int.Parse(btn.GetComponentInChildren<Text>().text) == m_currentNumber)
+        if (!m_isClickWrongNumber)
         {
-            btn.image.color = Color.green;
-            m_currentNumber++;
-        }
-        else if (btn.image.color != Color.green)
-        {
-            m_isClickWrongNumber = true;
+            if (int.Parse(btn.GetComponentInChildren<Text>().text) == m_currentNumber)
+            {
+                btn.image.color = Color.green;
+                m_currentNumber++;
+            }
+            else if (btn.image.color != Color.green)
+            {
+                m_isClickWrongNumber = true;
+                m_currentNumber = 1;
+                resetAllButton();
+            }
         }
     }
 
     void resetAllButton()
     {
+        StartCoroutine(FlashRed(1f));
+    }
+
+    private IEnumerator FlashRed(float duration)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            button[i].image.color = Color.red;
+        }
+        yield return new WaitForSeconds(duration);
         for (int i = 0; i < transform.childCount; i++)
         {
             button[i].image.color = Color.white;
         }
+        m_isClickWrongNumber = false;
     }
 }
