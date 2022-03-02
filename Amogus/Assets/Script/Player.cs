@@ -30,10 +30,14 @@ public class Player : MonoBehaviour
         {
             m_isDoingQuest = true;
             QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(false);
-            QuestSystem.transform.Find("Unlock Manifolds").gameObject.SetActive(true);
-            Debug.Log("Display Quest");
+            m_currentQuest.GetComponent<Quest>().ActiveQuest();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+        if (m_isDoingQuest && m_currentQuest.GetComponent<Quest>().IsQuestComplete())
+        {
+            StartCoroutine(CompleteQuest(2f));
+            
         }
     }
 
@@ -44,8 +48,7 @@ public class Player : MonoBehaviour
             m_currentQuest = collision.gameObject;
             if (m_currentQuest.GetComponent<Quest>().IsQuestComplete() == false && m_isDoingQuest == false)
             {
-                QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(true);
-                m_isOnQuestRange = true;
+                EnterQuest();
             }
         }
     }
@@ -60,11 +63,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void EnterQuest()
+    {
+        QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(true);
+        m_isOnQuestRange = true;
+    }
+
     public void ExitQuest()
     {
         QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(false);
-        QuestSystem.transform.Find("Unlock Manifolds").gameObject.SetActive(false);
+        if (m_currentQuest)
+        {
+            m_currentQuest.GetComponent<Quest>().DeactiveQuest();
+        }
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private IEnumerator CompleteQuest(float fadeInSec)
+    {
+        QuestSystem.transform.Find("CompleteText").gameObject.SetActive(true);
+        ExitQuest();
+        yield return new WaitForSeconds(fadeInSec);
+        QuestSystem.transform.Find("CompleteText").gameObject.SetActive(false);
     }
 }

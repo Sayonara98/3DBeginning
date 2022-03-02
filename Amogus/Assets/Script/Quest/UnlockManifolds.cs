@@ -5,27 +5,21 @@ using UnityEngine.UI;
 
 public class UnlockManifolds : MonoBehaviour
 {
-    private Transform[] children;
     private Button[] button;
 
     private int m_currentNumber;
 
     private bool m_isClickWrongNumber;
 
+    private Quest quest;
+
     // Start is called before the first frame update
     void Start()
     {
-        children = new Transform[transform.childCount];
         button = new Button[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            //children[i] = transform.GetChild(i);
-            //children[i].gameObject.GetComponentInChildren<Text>().text = (i + 1).ToString();
-            //Button btn = children[i].gameObject.GetComponentInChildren<Button>();
-            //btn.image.color = Color.white;
-            //btn.onClick.AddListener(() => OnClickButton(btn));
-
             button[i] = transform.GetChild(i).gameObject.GetComponentInChildren<Button>();
             button[i].GetComponentInChildren<Text>().text = (i + 1).ToString();
             button[i].image.color = Color.white;
@@ -34,6 +28,7 @@ public class UnlockManifolds : MonoBehaviour
         }
 
         m_currentNumber = 1;
+        quest = GameObject.Find("Quest").transform.Find(gameObject.name).gameObject.GetComponent<Quest>();
     }
 
     // Update is called once per frame
@@ -44,6 +39,11 @@ public class UnlockManifolds : MonoBehaviour
             resetAllButton();
             m_isClickWrongNumber = false;
             m_currentNumber = 1;
+        }
+
+        if (m_currentNumber == transform.childCount + 1 && quest.IsQuestComplete() == false)
+        {
+            quest.CompleteQuest();
         }
     }
 
