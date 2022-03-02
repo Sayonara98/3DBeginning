@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Canvas QuestSystem;
 
+    private GameObject m_currentQuest;
+
     private bool m_isDoingQuest;
     private bool m_isOnQuestRange;
 
@@ -28,7 +30,7 @@ public class Player : MonoBehaviour
         {
             m_isDoingQuest = true;
             QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(false);
-            QuestSystem.transform.Find("CopiumQuest").gameObject.SetActive(true);
+            QuestSystem.transform.Find("Unlock Manifolds").gameObject.SetActive(true);
             Debug.Log("Display Quest");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -37,12 +39,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GameObject quest;
-
         if (collision.gameObject.tag == "Quest")
         {
-            quest = collision.gameObject;
-            if (quest.GetComponent<Quest>().IsQuestComplete() == false && m_isDoingQuest == false)
+            m_currentQuest = collision.gameObject;
+            if (m_currentQuest.GetComponent<Quest>().IsQuestComplete() == false && m_isDoingQuest == false)
             {
                 QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(true);
                 m_isOnQuestRange = true;
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     public void ExitQuest()
     {
         QuestSystem.transform.Find("InteractTextGuild").gameObject.SetActive(false);
-        QuestSystem.transform.Find("CopiumQuest").gameObject.SetActive(false);
+        QuestSystem.transform.Find("Unlock Manifolds").gameObject.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
