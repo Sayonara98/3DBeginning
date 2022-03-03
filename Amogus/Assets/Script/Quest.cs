@@ -6,11 +6,15 @@ public class Quest : MonoBehaviour
 {
     private bool m_isQuestComplete;
     private GameObject QuestSystem;
+    private GameObject m_Quest;
 
     void Start()
     {
         m_isQuestComplete = false;
+        gameObject.tag = "Quest";
         QuestSystem = GameObject.Find("QuestSystem");
+        Debug.Log("name: " + gameObject.name);
+        m_Quest = QuestSystem.transform.Find(gameObject.name).gameObject;
     }
 
     public bool IsQuestComplete()
@@ -25,11 +29,17 @@ public class Quest : MonoBehaviour
 
     public void ActiveQuest()
     {
-        QuestSystem.transform.Find(gameObject.name).gameObject.SetActive(true);
+        if (m_Quest)
+        {
+            m_Quest.SetActive(true);
+        }
     }
 
     public void DeactiveQuest()
     {
-        QuestSystem.transform.Find(gameObject.name).gameObject.SetActive(false);
+        if (m_Quest)
+        {
+            m_Quest.SetActive(false);
+        }
     }
 }
