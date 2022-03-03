@@ -7,8 +7,10 @@ public class PlayerCameraHandle : MonoBehaviour
 {
     [SerializeField]
     private Transform m_target;
+    
     [SerializeField]
     private float m_distanceFromTarget = 3.0f;
+
     [SerializeField]
     private float RotationSpeed = 1;
 
@@ -23,17 +25,22 @@ public class PlayerCameraHandle : MonoBehaviour
     [SerializeField]
     private Vector2 m_rotationXMinMax = new Vector2(-40, 40);
 
+    private Player player;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        player = m_target.parent.gameObject.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CameraControl();
+        if (!player.isDoingQuest())
+        {
+            CameraControl();
+        }
     }
 
     void CameraControl()

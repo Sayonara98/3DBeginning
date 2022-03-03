@@ -87,4 +87,9 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(fadeInSec);
         QuestSystem.transform.Find("CompleteText").gameObject.SetActive(false);
     }
+
+    public bool isDoingQuest()
+    {
+        return m_isDoingQuest;
+    }    
 }
