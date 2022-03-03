@@ -16,12 +16,15 @@ public class UnlockManifolds : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int[] array = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        Shuffle(array);
+
         button = new Button[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
             button[i] = transform.GetChild(i).gameObject.GetComponentInChildren<Button>();
-            button[i].GetComponentInChildren<Text>().text = (i + 1).ToString();
+            button[i].GetComponentInChildren<Text>().text = array[i].ToString();
             button[i].image.color = Color.white;
             Button btn = button[i];
             button[i].onClick.AddListener(() => OnClickButton(btn));
@@ -40,6 +43,18 @@ public class UnlockManifolds : MonoBehaviour
         }
     }
 
+    // Fisher - Yates algorithm
+    void Shuffle(int[] array)
+    {
+        int n = array.Length;
+        while (n > 1)
+        {
+            int k = Random.Range(1, n--);
+            int temp = array[n];
+            array[n] = array[k];
+            array[k] = temp;
+        }
+    }
     void OnClickButton(Button btn)
     {
         if (!m_isClickWrongNumber)
