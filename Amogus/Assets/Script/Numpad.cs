@@ -23,7 +23,7 @@ public class Numpad : MonoBehaviour
     private void OnClickButton(string code)
     {
         m_sInputCode += code;
-        Debug.Log(m_sInputCode);
+        //Debug.Log(m_sInputCode);
     }
 
     public string getInput()
@@ -31,9 +31,28 @@ public class Numpad : MonoBehaviour
         return m_sInputCode;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ClearInputCode()
     {
-        
+        m_sInputCode = "";
+    }
+
+    public void AcessDenied()
+    {
+        StartCoroutine(TemporaryBlockKeyBoard());
+    }
+
+    private IEnumerator TemporaryBlockKeyBoard()
+    {
+        for (int i = 0; i < keyboard.Length; i++)
+        {
+            keyboard[i].enabled = false;
+            keyboard[i].image.color = Color.red;
+        }
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < keyboard.Length; i++)
+        {
+            keyboard[i].enabled = true;
+            keyboard[i].image.color = Color.white;
+        }
     }
 }

@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         if (m_isDoingQuest && m_currentQuest.GetComponent<Quest>().IsQuestComplete())
         {
             StartCoroutine(CompleteQuest(2f));
-            
+            m_isDoingQuest = false;
         }
     }
 
