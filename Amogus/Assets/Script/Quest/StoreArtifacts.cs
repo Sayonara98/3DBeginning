@@ -16,16 +16,14 @@ public class StoreArtifacts : MonoBehaviour
 
     private void Update()
     {
-        if (m_pairCount == 4 && quest.isQuestActive())
+        if (m_pairCount == 4)
         {
             quest.CompleteQuest();
-            Debug.Log("Complete");
         }
     }
 
     public void oneMorePairMatch()
     {
         m_pairCount++;
-        Debug.Log("Amazing");
     }    
 }

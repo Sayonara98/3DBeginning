@@ -48,7 +48,7 @@ public class StartReactor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (quest.isQuestActive() && quest.IsQuestComplete() == false)
+        if (quest.IsQuestComplete() == false)
         {
             if (m_iCurrentProgress > m_iCodeComplexity)
             {
@@ -85,6 +85,11 @@ public class StartReactor : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        m_bIsWaitingInput = false;
     }
 
     public void genNewCode()

@@ -37,7 +37,7 @@ public class UnlockManifolds : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_currentNumber == transform.childCount + 1 && quest.isQuestActive())
+        if (m_currentNumber == transform.childCount + 1)
         {
             quest.CompleteQuest();
         }
